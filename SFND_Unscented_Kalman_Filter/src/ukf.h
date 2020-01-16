@@ -40,14 +40,19 @@ class UKF {
    * @param meas_package The measurement at k+1
    */
   void RadarPredict();
-
-  void SigmaPointPrediction(Eigen::MatrixXd &Xsig_aug,double delta_t);
-  void AugmentedSigmaPoints(Eigen::MatrixXd &Xsig_aug);
+  
+  void SigmaPointPrediction(double dt);
+  void AugmentedSigmaPoints();
   void PredictMeanAndCovariance();
+  
   Eigen::MatrixXd toPolar(const Eigen::VectorXd& x);
 	Eigen::MatrixXd toCartesian(const Eigen::VectorXd& x);
+  
   void UpdateState(const Eigen::VectorXd &x);
   void normalize(double &num);
+  
+ void PredictRadarMeasurement();
+ void PredictLaserMeasurement();
 
   //introduce a timestamp
   double timestamp_; 
@@ -134,10 +139,7 @@ class UKF {
 
   //mean predicted measurement
   Eigen::VectorXd z_pred_; 
-
-  // measuremnt vector
-  Eigen::VectorXd z_; 
-
+  
   //Matrix for Sigma Points in measurement space; 
   Eigen::MatrixXd Z_sig_; 
 
@@ -146,8 +148,7 @@ class UKF {
   //measurement noise Radar
   Eigen::MatrixXd R_radar_; 
 
-  // measurement Matrix 
-  Eigen::MatrixXd H_; 
+
 };
 
 #endif  // UKF_H
