@@ -33,19 +33,21 @@ class UKF {
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(const Eigen::VectorXd &z);
+  void LidarPredict();
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(const Eigen::VectorXd &z);
+  void RadarPredict();
 
-  void SigmaPointPrediction(Eigen::MatrixXd* Xsig_out,double delta_t);
-  void AugmentedSigmaPoints(Eigen::MatrixXd* Xsig_out);
-  void PredictMeanAndCovariance(Eigen::VectorXd* x_out, Eigen::MatrixXd* P_out);
+  void SigmaPointPrediction(Eigen::MatrixXd &Xsig_aug,double delta_t);
+  void AugmentedSigmaPoints(Eigen::MatrixXd &Xsig_aug);
+  void PredictMeanAndCovariance();
   Eigen::MatrixXd toPolar(const Eigen::VectorXd& x);
 	Eigen::MatrixXd toCartesian(const Eigen::VectorXd& x);
+  void UpdateState(const Eigen::VectorXd &x);
+  void normalize(double &num);
 
   //introduce a timestamp
   double timestamp_; 
@@ -104,7 +106,7 @@ class UKF {
   double radar_NIS_; 
 
   //NIS for lidar
-  double lidar_NIS; 
+  double lidar_NIS_; 
 
   // Weights of sigma points
   Eigen::VectorXd weights_;
