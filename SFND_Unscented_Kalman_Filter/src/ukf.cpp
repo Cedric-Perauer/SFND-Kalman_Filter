@@ -126,7 +126,6 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   double delta_t = (meas_package.timestamp_ -  timestamp_)*1e-6; //delta t
   timestamp_ = meas_package.timestamp_;
   //Prediction(delta_t);
-  std::cout << "tim" <<std::endl;
   if(meas_package.sensor_type_ == MeasurementPackage::RADAR)
     {
      n_z_ = n_r_; 
