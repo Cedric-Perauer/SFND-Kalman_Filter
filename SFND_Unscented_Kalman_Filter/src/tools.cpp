@@ -120,6 +120,9 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 	return rmse;
 }
 
+
+
+
 void Tools::savePcd(typename pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, std::string file)
 {
   pcl::io::savePCDFileASCII (file, *cloud);

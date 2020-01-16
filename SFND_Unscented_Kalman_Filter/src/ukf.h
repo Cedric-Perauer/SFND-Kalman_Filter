@@ -33,15 +33,22 @@ class UKF {
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(const Eigen::VectorXd &z);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(const Eigen::VectorXd &z);
 
+  void SigmaPointPrediction(Eigen::MatrixXd* Xsig_out,double delta_t);
+  void AugmentedSigmaPoints(Eigen::MatrixXd* Xsig_out);
+  void PredictMeanAndCovariance(Eigen::VectorXd* x_out, Eigen::MatrixXd* P_out);
+  Eigen::MatrixXd toPolar(const Eigen::VectorXd& x);
+	Eigen::MatrixXd toCartesian(const Eigen::VectorXd& x);
 
+  //introduce a timestamp
+  double timestamp_; 
   // initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
 
@@ -54,11 +61,20 @@ class UKF {
   // state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   Eigen::VectorXd x_;
 
+  // state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
+  Eigen::VectorXd x_aug_;
+
   // state covariance matrix
   Eigen::MatrixXd P_;
 
+  // augmented state covariance matrix
+  Eigen::MatrixXd P_aug_; 
+
   // predicted sigma points matrix
   Eigen::MatrixXd Xsig_pred_;
+
+  // augmented Sigma Points Matrix
+  Eigen::MatrixXd Xsig_aug_; 
 
   // time when the state is true, in us
   long long time_us_;
@@ -102,6 +118,9 @@ class UKF {
   // State dimension
   int n_x_;
 
+  //measurement dimension 
+  int n_z_; 
+
   // Augmented state dimension
   int n_aug_;
 
@@ -114,10 +133,19 @@ class UKF {
   //mean predicted measurement
   Eigen::VectorXd z_pred_; 
 
+  // measuremnt vector
+  Eigen::VectorXd z_; 
+
+  //Matrix for Sigma Points in measurement space; 
+  Eigen::MatrixXd Z_sig_; 
+
   //measurement noise Lidar
   Eigen::MatrixXd R_lidar_; 
   //measurement noise Radar
   Eigen::MatrixXd R_radar_; 
+
+  // measurement Matrix 
+  Eigen::MatrixXd H_; 
 };
 
 #endif  // UKF_H
