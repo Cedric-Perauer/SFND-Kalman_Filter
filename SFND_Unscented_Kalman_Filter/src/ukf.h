@@ -45,9 +45,6 @@ class UKF {
   void AugmentedSigmaPoints();
   void PredictMeanAndCovariance();
   
-  Eigen::MatrixXd toPolar(const Eigen::VectorXd& x);
-	Eigen::MatrixXd toCartesian(const Eigen::VectorXd& x);
-  
   void UpdateState(const Eigen::VectorXd &x);
   void normalize(double &num);
   

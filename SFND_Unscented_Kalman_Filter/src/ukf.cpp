@@ -370,37 +370,6 @@ void UKF::PredictMeanAndCovariance() {
 
 
 
-
-MatrixXd UKF::toPolar(const VectorXd& x){
-
-  VectorXd x_n(4);
-
-  x_n << x(0)*cos(x(1)),  x(0)*sin(x(1)), x(2), 0;
-
-  return x_n;
-}
-
-
-MatrixXd UKF::toCartesian(const VectorXd& x){
-
-  VectorXd x_n(4);
-  double r = x(0);
-  double angle = x(1);
-
-  r =  sqrt(pow(x(0),2) + pow(x(1),2));
-  angle =  atan(x(1)/x(0));
-
-  if (x(3))
-    {
-		x_n(2) = ((x(0)*x(2))+(x(1)*x(3)))/r;
-	}
-
-  x_n << r, angle, x_n(2), 0;
-
-  return x_n;
-}
-
-
 void UKF::normalize(double &num)
 {
   while(num>M_PI) num-=2.*M_PI; 
