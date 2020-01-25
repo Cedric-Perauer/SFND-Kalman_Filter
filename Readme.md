@@ -1,9 +1,8 @@
 # SFND-Kalman_Filter
 Repository for the Sensor Fusion Nanodegree Project and exercises
 
-
-
-
+# Useful Video Lectures
++ [Awesome Bonn SLAM course by Cyrill Stachniss](https://www.youtube.com/watch?v=U6vr3iNrwRA&list=PLgnQpQtFTOGQrZ4O5QzbIHgl3b1JHimN_&index=1)
 
 # Useful Papers and Articles
 
